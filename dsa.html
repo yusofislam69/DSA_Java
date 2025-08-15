@@ -1,0 +1,2592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete DSA Guide for Beginners - Java Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+        
+        /* Navigation */
+        .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            padding: 0.75rem 1.25rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .progress-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 5px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            min-height: 80vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 2rem;
+            border-right: 1px solid #e2e8f0;
+        }
+        
+        .sidebar h3 {
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .chapter-list {
+            list-style: none;
+        }
+        
+        .chapter-item {
+            margin-bottom: 0.75rem;
+        }
+        
+        .chapter-link {
+            display: block;
+            padding: 1rem;
+            text-decoration: none;
+            color: #4a5568;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 2px solid transparent;
+        }
+        
+        .chapter-link:hover {
+            background: white;
+            color: #667eea;
+            transform: translateX(8px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        
+        .chapter-link.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateX(8px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .chapter-link.completed {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+        
+        .chapter-link.completed::after {
+            content: " ✓";
+            float: right;
+        }
+        
+        /* Content Area */
+        .content-area {
+            padding: 3rem;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+        
+        .chapter {
+            display: none;
+        }
+        
+        .chapter.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .chapter h2 {
+            color: #1a202c;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .chapter h3 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1.5rem 0;
+            position: relative;
+            padding-left: 1rem;
+        }
+        
+        .chapter h3::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        
+        .chapter h4 {
+            color: #4a5568;
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+        }
+        
+        .chapter p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+        }
+        
+        .chapter ul, .chapter ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        .chapter li {
+            margin-bottom: 0.75rem;
+            font-size: 1.05rem;
+            color: #4a5568;
+        }
+        
+        /* Important Notes */
+        .note {
+            background: linear-gradient(135deg, #ebf8ff, #bee3f8);
+            border-left: 5px solid #3182ce;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+        
+        .note h4 {
+            color: #2c5282;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .warning {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border-left: 5px solid #f59e0b;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+        
+        .warning h4 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Code Blocks */
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            position: relative;
+            border: 1px solid #2d3748;
+        }
+        
+        .code-block::before {
+            content: 'Java';
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .code-block .keyword {
+            color: #f472b6;
+            font-weight: 600;
+        }
+        
+        .code-block .string {
+            color: #34d399;
+        }
+        
+        .code-block .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #fbbf24;
+        }
+        
+        .code-block .class-name {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        
+        /* Complexity Boxes */
+        .complexity-section {
+            background: #f7fafc;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .complexity-section h4 {
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+        
+        .complexity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .complexity-item {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .complexity-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .complexity-item.time {
+            border-color: #48bb78;
+        }
+        
+        .complexity-item.space {
+            border-color: #4299e1;
+        }
+        
+        .complexity-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        .complexity-item.time .complexity-label {
+            color: #48bb78;
+        }
+        
+        .complexity-item.space .complexity-label {
+            color: #4299e1;
+        }
+        
+        .complexity-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+        
+        /* Problem Cards */
+        .problem-section {
+            margin: 3rem 0;
+        }
+        
+        .problem-section h3 {
+            color: #e53e3e;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .problem-card {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        
+        .problem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .problem-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a202c;
+        }
+        
+        .difficulty {
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .difficulty.easy {
+            background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+            color: #22543d;
+        }
+        
+        .difficulty.medium {
+            background: linear-gradient(135deg, #fef3c7, #fcd34d);
+            color: #92400e;
+        }
+        
+        .difficulty.hard {
+            background: linear-gradient(135deg, #fed7d7, #fc8181);
+            color: #742a2a;
+        }
+        
+        .problem-description {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        /* Interactive Elements */
+        .run-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .run-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .output-box {
+            background: #0d1117;
+            color: #58a6ff;
+            padding: 2rem;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 2rem 0;
+            min-height: 100px;
+            display: none;
+            border: 2px solid #21262d;
+            white-space: pre-line;
+        }
+        
+        /* Learning Path */
+        .learning-path {
+            background: linear-gradient(135deg, #e6fffa, #b2f5ea);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border: 2px solid #4fd1c7;
+        }
+        
+        .learning-path h4 {
+            color: #234e52;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .learning-steps {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .learning-steps li {
+            background: white;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #4fd1c7;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+            }
+            
+            .content-area {
+                max-height: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+            
+            .content-area {
+                padding: 2rem;
+            }
+            
+            .chapter h2 {
+                font-size: 2rem;
+            }
+            
+            .complexity-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // JavaScript for interactive functionality
+        let completedChapters = new Set();
+        
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link, .chapter-link');
+            const chapters = document.querySelectorAll('.chapter');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetChapter = this.getAttribute('data-chapter');
+                    console.log('Switching to chapter:', targetChapter);
+                    
+                    // Update active states for navigation
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    document.querySelectorAll('.chapter-link').forEach(l => l.classList.remove('active'));
+                    
+                    // Set active state for clicked link and corresponding links
+                    const correspondingLinks = document.querySelectorAll(`[data-chapter="${targetChapter}"]`);
+                    correspondingLinks.forEach(l => l.classList.add('active'));
+                    
+                    // Show target chapter
+                    chapters.forEach(chapter => {
+                        chapter.classList.remove('active');
+                        if (chapter.id === targetChapter) {
+                            chapter.classList.add('active');
+                            console.log('Showing chapter:', targetChapter);
+                        }
+                    });
+                    
+                    // Update progress
+                    updateProgress();
+                    
+                    // Scroll to top of content area
+                    const contentArea = document.querySelector('.content-area');
+                    if (contentArea) {
+                        contentArea.scrollTop = 0;
+                    }
+                });
+            });
+            
+            // Initialize first chapter as active
+            const firstChapter = document.getElementById('intro');
+            if (firstChapter) {
+                firstChapter.classList.add('active');
+            }
+        });
+        
+        function updateProgress() {
+            const totalChapters = 10;
+            const completed = completedChapters.size;
+            const percentage = Math.round((completed / totalChapters) * 100);
+            
+            const progressFill = document.getElementById('progressFill');
+            const progressPercent = document.getElementById('progressPercent');
+            
+            if (progressFill) progressFill.style.width = percentage + '%';
+            if (progressPercent) progressPercent.textContent = percentage + '%';
+        }
+        
+        function markChapterComplete(chapterId) {
+            completedChapters.add(chapterId);
+            const chapterLinks = document.querySelectorAll(`[data-chapter="${chapterId}"]`);
+            chapterLinks.forEach(link => {
+                link.classList.add('completed');
+            });
+            updateProgress();
+        }
+
+        // Interactive code examples
+        function runIntroExample() {
+            const output = document.getElementById('introOutput');
+            output.style.display = 'block';
+            output.innerHTML = `Running Time Complexity Examples...
+
+O(1) Example - Getting first element:
+Array: [5, 2, 8, 1, 9]
+First element: 5
+Time taken: Constant (same regardless of array size)
+
+O(n) Example - Finding largest number:
+Array: [5, 2, 8, 1, 9]
+Checking 5... current largest: 5
+Checking 2... current largest: 5
+Checking 8... current largest: 8
+Checking 1... current largest: 8
+Checking 9... current largest: 9
+Largest number: 9
+Time taken: Linear (grows with array size)
+
+✅ Examples completed! Notice how O(1) is instant while O(n) checks each element.`;
+            markChapterComplete('intro');
+        }
+
+        function runBasicsExample() {
+            const output = document.getElementById('basicsOutput');
+            output.style.display = 'block';
+            output.innerHTML = `Running Java Basics Examples...
+
+=== VARIABLE EXAMPLES ===
+Name: John
+Age: 25
+Is student: true
+
+=== ARRAY EXAMPLES ===
+First score: 85
+Second age: 30
+Third name: Charlie
+Number of names: 3
+
+All names:
+Name 0: Alice
+Name 1: Bob
+Name 2: Charlie
+
+All ages:
+Age: 25
+Age: 30
+Age: 35
+Age: 40
+
+=== METHOD EXAMPLES ===
+Hello, Alice!
+Hello, Bob!
+5 + 3 = 8
+Largest number: 20
+
+=== CLASS EXAMPLES ===
+Hi! I'm Alice, I'm 20 years old.
+Hi! I'm Bob, I'm 19 years old.
+Alice is an honor student!
+Bob needs to study harder.
+
+✅ Java basics mastered! You're ready for data structures.`;
+            markChapterComplete('basics');
+        }
+
+        function runArrayExample() {
+            const output = document.getElementById('arrayOutput');
+            output.style.display = 'block';
+            output.innerHTML = `Running Array Examples...
+
+=== ARRAY BASICS ===
+First number: 10
+Last number: 50
+Second fruit: banana
+Modified first number: 100
+Array length: 5
+
+All numbers:
+Index 0: 100
+Index 1: 20
+Index 2: 30
+Index 3: 40
+Index 4: 50
+
+=== SEARCHING EXAMPLES ===
+Searching for 22 in the array...
+Checking index 0: 64
+Checking index 1: 34
+Checking index 2: 25
+Checking index 3: 12
+Checking index 4: 22
+Found 22 at index 4
+
+Binary search for 7
+Step 1: Checking middle index 3 (value: 7)
+Found 7 at index 3 in 1 steps!
+
+=== TWO SUM PROBLEM ===
+Using hash map approach...
+Looking for complement of 2: 7
+Added 2 at index 0 to map
+Looking for complement of 7: 2
+Found complement at index 0
+Solution: [0, 1]
+
+=== STOCK PROBLEM ===
+Day 0: Price = 7, Min Price = 7, Max Profit = 0
+Day 1: Price = 1, Min Price = 1, Max Profit = 0
+Day 2: Price = 5, Min Price = 1, Max Profit = 4
+Day 3: Price = 3, Min Price = 1, Max Profit = 4
+Day 4: Price = 6, Min Price = 1, Max Profit = 5
+Day 5: Price = 4, Min Price = 1, Max Profit = 5
+Maximum Profit: 5
+
+✅ Array mastery achieved! You understand searching, two pointers, and problem-solving patterns.`;
+            markChapterComplete('arrays');
+        }
+
+        function runStringExample() {
+            const output = document.getElementById('stringOutput');
+            output.style.display = 'block';
+            output.innerHTML = `Running String Examples...
+
+=== STRING BASICS ===
+Greeting: Hello World
+Length of greeting: 11
+First character: H
+Last character: d
+str1 equals str2: true
+str1 == str2: false
+Uppercase: HELLO WORLD
+Lowercase: hello world
+Substring (0-5): Hello
+
+=== STRINGBUILDER DEMO ===
+Inefficient result: Number 0 Number 1 Number 2 Number 3 Number 4 
+Efficient result: Number 0 Number 1 Number 2 Number 3 Number 4 
+StringBuilder demo: dlroW lufituaeB olleH
+
+=== PALINDROME TESTS ===
+Checking if 'racecar' is a palindrome...
+Cleaned string: 'racecar'
+Comparing 'r' with 'r'
+Comparing 'a' with 'a'
+Comparing 'c' with 'c'
+It's a palindrome!
+
+Checking if 'A man a plan a canal Panama' is a palindrome...
+Cleaned string: 'amanaplanacanalpanama'
+Comparing 'a' with 'a'
+Comparing 'm' with 'm'
+Comparing 'a' with 'a'
+It's a palindrome!
+
+=== ANAGRAM TESTS ===
+Checking if 'listen' and 'silent' are anagrams...
+They are anagrams!
+
+Checking if 'hello' and 'world' are anagrams...
+Not anagrams!
+
+✅ String manipulation mastered! You can handle text processing like a pro.`;
+            markChapterComplete('strings');
+        }
+
+        function runLinkedListExample() {
+            const output = document.getElementById('linkedListOutput');
+            output.style.display = 'block';
+            output.innerHTML = `Running Linked List Examples...
+
+=== LINKED LIST DEMO ===
+List: 1 -> 2 -> 3 -> null
+
+Inserting 0 at the beginning
+List: 0 -> 1 -> 2 -> 3 -> null
+
+Inserting 4 at the end
+List: 0 -> 1 -> 2 -> 3 -> 4 -> null
+
+Finding middle of the list
+Middle element: 2
+
+Deleting node with value 2
+Found and deleting node
+List: 0 -> 1 -> 3 -> 4 -> null
+
+Reversing the linked list
+List: 4 -> 3 -> 1 -> 0 -> null
+
+✅ Linked Lists conquered! You understand pointers, traversal, and manipulation.`;
+            markChapterComplete('linkedlist');
+        }
+
+        function runStackExample() {
+            const output = document.getElementById('stackOutput');
+            output.style.display = 'block';
+            output.innerHTML = `Running Stack Examples...
+
+=== STACK OPERATIONS ===
+Pushed 10
+Pushed 20
+Pushed 30
+Stack: [10, 20, 30] (top)
+
+Popped 30
+Popped 20
+Stack: [10] (top)
+
+Pushed 40
+Pushed 50
+Stack: [10, 40, 50] (top)
+
+=== BALANCED PARENTHESES CHECK ===
+Checking: "((()))"
+Result: Balanced ✓
+
+Checking: "((())"
+Result: Not balanced ✗
+
+Checking: "(){}[]"
+Result: Balanced ✓
+
+✅ Stacks and Queues mastered! LIFO and FIFO principles are clear.`;
+            markChapterComplete('stacks');
+        }
+
+        function runTreeExample() {
+            const output = document.getElementById('treeOutput');
+            output.style.display = 'block';
+            output.innerHTML = `Running Tree Examples...
+
+=== BINARY TREE DEMO ===
+Tree structure:
+       4
+      / \\
+     2   6
+    / \\ / \\
+   1  3 5  7
+
+Inorder traversal (Left-Root-Right): 1 2 3 4 5 6 7
+Preorder traversal (Root-Left-Right): 4 2 1 3 6 5 7
+Postorder traversal (Left-Right-Root): 1 3 2 5 7 6 4
+
+Tree height: 3
+Number of nodes: 7
+
+=== BINARY SEARCH TREE ===
+Searching for 5: Found at depth 2
+Searching for 8: Not found
+
+✅ Trees mastered! You understand hierarchical data and traversals.`;
+            markChapterComplete('trees');
+        }
+
+        function runGraphExample() {
+            const output = document.getElementById('graphOutput');
+            output.style.display = 'block';
+            output.innerHTML = `Running Graph Examples...
+
+=== GRAPH REPRESENTATION ===
+Graph with 5 vertices:
+0 -> [1, 2]
+1 -> [0, 3, 4]
+2 -> [0, 4]
+3 -> [1]
+4 -> [1, 2]
+
+=== DEPTH-FIRST SEARCH ===
+Starting DFS from vertex 0:
+Visited: 0 1 3 4 2
+
+=== BREADTH-FIRST SEARCH ===
+Starting BFS from vertex 0:
+Visited: 0 1 2 3 4
+
+=== SHORTEST PATH ===
+Shortest path from 0 to 4: 0 -> 1 -> 4
+Distance: 2
+
+✅ Graphs conquered! You understand connections and traversal algorithms.`;
+            markChapterComplete('graphs');
+        }
+
+        function runSortingExample() {
+            const output = document.getElementById('sortingOutput');
+            output.style.display = 'block';
+            output.innerHTML = `Running Sorting Examples...
+
+=== BUBBLE SORT ===
+Starting array: [64, 34, 25, 12, 22, 11, 90]
+Starting Bubble Sort...
+Swapped 64 and 34
+Swapped 64 and 25
+Swapped 64 and 12
+Swapped 64 and 22
+Swapped 64 and 11
+...continuing swaps...
+Final sorted array: [11, 12, 22, 25, 34, 64, 90]
+Time complexity: O(n²)
+
+=== QUICK SORT ===
+Starting array: [64, 34, 25, 12, 22, 11, 90]
+Partitioning around pivot 90...
+Partitioning around pivot 64...
+...recursive sorting...
+Final sorted array: [11, 12, 22, 25, 34, 64, 90]
+Time complexity: O(n log n) average
+
+=== MERGE SORT ===
+Dividing array into smaller parts...
+Merging sorted subarrays...
+Final sorted array: [11, 12, 22, 25, 34, 64, 90]
+Time complexity: O(n log n) guaranteed
+
+✅ Sorting algorithms mastered! You know when to use each algorithm.`;
+            markChapterComplete('sorting');
+        }
+
+        function runDPExample() {
+            const output = document.getElementById('dpOutput');
+            output.style.display = 'block';
+            output.innerHTML = `Running Dynamic Programming Examples...
+
+=== FIBONACCI SEQUENCE ===
+Computing F(6) using DP:
+F(2) = 1
+F(3) = 2
+F(4) = 3
+F(5) = 5
+F(6) = 8
+Result: 8
+
+=== CLIMBING STAIRS ===
+Ways to climb 5 stairs (1 or 2 steps at a time):
+Ways[1] = 1
+Ways[2] = 2
+Ways[3] = 3
+Ways[4] = 5
+Ways[5] = 8
+Result: 8 ways
+
+=== COIN CHANGE ===
+Making change for $11 with coins [1, 5, 10]:
+Min coins for $1: 1 coin
+Min coins for $5: 1 coin
+Min coins for $6: 2 coins
+Min coins for $10: 1 coin
+Min coins for $11: 2 coins
+Result: 2 coins (10 + 1)
+
+✅ Dynamic Programming mastered! You can solve optimization problems efficiently.`;
+            markChapterComplete('dp');
+        }
+    </script>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>🚀 Complete DSA Guide for Beginners</h1>
+            <p>Master Data Structures & Algorithms with Java - From Zero to Hero</p>
+            <div class="subtitle">📚 Comprehensive • 🎯 Beginner-Friendly • 💻 Java-Focused • 🔥 Interview-Ready</div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-chapter="intro">🏁 Start Here</a></li>
+                    <li><a href="#" class="nav-link" data-chapter="basics">🔤 Java Basics</a></li>
+                    <li><a href="#" class="nav-link" data-chapter="arrays">📊 Arrays</a></li>
+                    <li><a href="#" class="nav-link" data-chapter="strings">🔤 Strings</a></li>
+                    <li><a href="#" class="nav-link" data-chapter="linkedlist">🔗 Linked Lists</a></li>
+                    <li><a href="#" class="nav-link" data-chapter="stacks">📚 Stacks & Queues</a></li>
+                    <li><a href="#" class="nav-link" data-chapter="trees">🌳 Trees</a></li>
+                    <li><a href="#" class="nav-link" data-chapter="graphs">🕸️ Graphs</a></li>
+                    <li><a href="#" class="nav-link" data-chapter="sorting">🔄 Sorting</a></li>
+                    <li><a href="#" class="nav-link" data-chapter="dp">🧠 Dynamic Programming</a></li>
+                </ul>
+                <div class="progress-container">
+                    <span class="progress-text">Progress:</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span id="progressPercent">0%</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h3>📖 Learning Path</h3>
+                <ul class="chapter-list">
+                    <li class="chapter-item">
+                        <a href="#" class="chapter-link active" data-chapter="intro">
+                            🏁 1. Introduction to DSA
+                        </a>
+                    </li>
+                    <li class="chapter-item">
+                        <a href="#" class="chapter-link" data-chapter="basics">
+                            🔤 2. Java Fundamentals
+                        </a>
+                    </li>
+                    <li class="chapter-item">
+                        <a href="#" class="chapter-link" data-chapter="arrays">
+                            📊 3. Arrays & ArrayList
+                        </a>
+                    </li>
+                    <li class="chapter-item">
+                        <a href="#" class="chapter-link" data-chapter="strings">
+                            🔤 4. Strings & StringBuilder
+                        </a>
+                    </li>
+                    <li class="chapter-item">
+                        <a href="#" class="chapter-link" data-chapter="linkedlist">
+                            🔗 5. Linked Lists
+                        </a>
+                    </li>
+                    <li class="chapter-item">
+                        <a href="#" class="chapter-link" data-chapter="stacks">
+                            📚 6. Stacks & Queues
+                        </a>
+                    </li>
+                    <li class="chapter-item">
+                        <a href="#" class="chapter-link" data-chapter="trees">
+                            🌳 7. Trees & Binary Trees
+                        </a>
+                    </li>
+                    <li class="chapter-item">
+                        <a href="#" class="chapter-link" data-chapter="graphs">
+                            🕸️8. Graphs & Algorithms
+                        </a>
+                    </li>
+                    <li class="chapter-item">
+                        <a href="#" class="chapter-link" data-chapter="sorting">
+                            🔄 9. Sorting Algorithms
+                        </a>
+                    </li>
+                    <li class="chapter-item">
+                        <a href="#" class="chapter-link" data-chapter="dp">
+                            🧠 10. Dynamic Programming
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <!-- Introduction Chapter -->
+                <div class="chapter active" id="intro">
+                    <h2>🏁 Welcome to Your DSA Journey!</h2>
+                    
+                    <div class="learning-path">
+                        <h4>🎯 What You'll Learn in This Complete Guide</h4>
+                        <ul class="learning-steps">
+                            <li>📚 Complete understanding of Data Structures and Algorithms from scratch</li>
+                            <li>☕ Java programming concepts essential for DSA</li>
+                            <li>🔍 How to analyze time and space complexity</li>
+                            <li>💡 Problem-solving techniques and patterns</li>
+                            <li>🚀 Interview preparation with 50+ coding problems</li>
+                            <li>🏆 Build confidence to tackle any coding challenge</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>🤔 What are Data Structures?</h3>
+                    <p>Think of data structures as different ways to organize and store information in a computer, just like how you organize things in your room:</p>
+                    
+                    <ul>
+                        <li><strong>Array:</strong> Like a row of numbered boxes where you can store items</li>
+                        <li><strong>Stack:</strong> Like a stack of plates - you can only add/remove from the top</li>
+                        <li><strong>Queue:</strong> Like a line at a store - first person in line gets served first</li>
+                        <li><strong>Tree:</strong> Like a family tree with parents and children</li>
+                        <li><strong>Graph:</strong> Like a map showing cities connected by roads</li>
+                    </ul>
+                    
+                    <h3>🧠 What are Algorithms?</h3>
+                    <p>An algorithm is simply a step-by-step recipe to solve a problem. Just like following a cooking recipe:</p>
+                    
+                    <ol>
+                        <li><strong>Input:</strong> The ingredients (your data)</li>
+                        <li><strong>Process:</strong> The cooking steps (your algorithm)</li>
+                        <li><strong>Output:</strong> The final dish (your result)</li>
+                    </ol>
+                    
+                    <div class="note">
+                        <h4>💡 Why Learn DSA?</h4>
+                        <p>Data Structures and Algorithms are the foundation of programming. They help you:</p>
+                        <ul>
+                            <li>Write faster and more efficient code</li>
+                            <li>Solve complex problems step by step</li>
+                            <li>Pass technical interviews at top companies</li>
+                            <li>Think like a professional programmer</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>⏱️ Understanding Time Complexity (Big O Notation)</h3>
+                    <p>Time complexity tells us how long an algorithm takes to run as the input size grows. Think of it like this:</p>
+                    
+                    <div class="complexity-section">
+                        <h4>📊 Common Time Complexities (From Best to Worst)</h4>
+                        <div class="complexity-grid">
+                            <div class="complexity-item time">
+                                <div class="complexity-label">O(1) - Constant</div>
+                                <div class="complexity-value">Like finding a book when you know the exact shelf number</div>
+                            </div>
+                            <div class="complexity-item time">
+                                <div class="complexity-label">O(log n) - Logarithmic</div>
+                                <div class="complexity-value">Like finding a word in a dictionary by opening to the middle</div>
+                            </div>
+                            <div class="complexity-item time">
+                                <div class="complexity-label">O(n) - Linear</div>
+                                <div class="complexity-value">Like reading every page of a book to find a word</div>
+                            </div>
+                            <div class="complexity-item time">
+                                <div class="complexity-label">O(n²) - Quadratic</div>
+                                <div class="complexity-value">Like comparing every student with every other student in class</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>💾 Understanding Space Complexity</h3>
+                    <p>Space complexity tells us how much extra memory an algorithm uses. It's like asking "How much extra storage space do I need?"</p>
+                    
+                    <div class="code-block">
+<span class="comment">// Let's see time complexity in action with simple examples</span>
+
+<span class="keyword">public class</span> <span class="class-name">TimeComplexityExamples</span> {
+    
+    <span class="comment">// O(1) - Constant Time: Always takes the same time</span>
+    <span class="keyword">public static int</span> getFirstElement(<span class="keyword">int</span>[] numbers) {
+        <span class="keyword">return</span> numbers[<span class="number">0</span>]; <span class="comment">// Just grab the first element</span>
+    }
+    
+    <span class="comment">// O(n) - Linear Time: Time grows with input size</span>
+    <span class="keyword">public static int</span> findLargestNumber(<span class="keyword">int</span>[] numbers) {
+        <span class="keyword">int</span> largest = numbers[<span class="number">0</span>];
+        
+        <span class="comment">// We need to check every number - that's why it's O(n)</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i < numbers.length; i++) {
+            <span class="keyword">if</span> (numbers[i] > largest) {
+                largest = numbers[i];
+            }
+        }
+        <span class="keyword">return</span> largest;
+    }
+    
+    <span class="comment">// O(n²) - Quadratic Time: Nested loops</span>
+    <span class="keyword">public static void</span> printAllPairs(<span class="keyword">int</span>[] numbers) {
+        <span class="comment">// For each number...</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < numbers.length; i++) {
+            <span class="comment">// ...compare it with every other number</span>
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j < numbers.length; j++) {
+                System.out.println(<span class="string">"Pair: "</span> + numbers[i] + <span class="string">", "</span> + numbers[j]);
+            }
+        }
+    }
+    
+    <span class="comment">// Let's test our functions</span>
+    <span class="keyword">public static void</span> main(String[] args) {
+        <span class="keyword">int</span>[] myNumbers = {<span class="number">5</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">9</span>};
+        
+        System.out.println(<span class="string">"First element: "</span> + getFirstElement(myNumbers));
+        System.out.println(<span class="string">"Largest number: "</span> + findLargestNumber(myNumbers));
+    }
+}
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>⚠️ Important for Beginners</h4>
+                        <p>Don't worry if Big O notation seems confusing at first! As you practice more problems, it will become natural. Focus on understanding the concept: "How does the algorithm's performance change as we give it more data?"</p>
+                    </div>
+                    
+                    <h3>🎯 How to Use This Guide</h3>
+                    <ol>
+                        <li><strong>Start from the beginning:</strong> Each chapter builds on the previous one</li>
+                        <li><strong>Practice the code:</strong> Copy and run every example in your IDE</li>
+                        <li><strong>Solve the problems:</strong> Try to solve them before looking at solutions</li>
+                        <li><strong>Take your time:</strong> Understanding is more important than speed</li>
+                        <li><strong>Ask questions:</strong> If something is unclear, research it further</li>
+                    </ol>
+                    
+                    <button class="run-button" onclick="runIntroExample()">
+                        🚀 Run Time Complexity Examples
+                    </button>
+                    <div class="output-box" id="introOutput"></div>
+                </div>
+
+                <!-- Java Basics Chapter -->
+                <div class="chapter" id="basics">
+                    <h2>☕ Java Fundamentals for DSA</h2>
+                    
+                    <p>Before diving into data structures, let's make sure you understand the Java concepts you'll need. Don't worry if you're new to Java - we'll explain everything step by step!</p>
+                    
+                    <h3>🔧 Setting Up Your Environment</h3>
+                    <div class="learning-path">
+                        <h4>📋 What You Need</h4>
+                        <ul class="learning-steps">
+                            <li>☕ Java Development Kit (JDK) - Download from Oracle or use OpenJDK</li>
+                            <li>💻 IDE (Integrated Development Environment) - IntelliJ IDEA, Eclipse, or VS Code</li>
+                            <li>📝 Text editor - Even Notepad works, but IDE is recommended</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>📝 Java Basics You Must Know</h3>
+                    
+                    <h4>1. Variables and Data Types</h4>
+                    <p>Variables are like labeled boxes where you store different types of data:</p>
+                    
+                    <div class="code-block">
+<span class="comment">// Basic data types in Java</span>
+<span class="keyword">public class</span> <span class="class-name">JavaBasics</span> {
+    <span class="keyword">public static void</span> main(String[] args) {
+        
+        <span class="comment">// Integer numbers</span>
+        <span class="keyword">int</span> age = <span class="number">25</span>;                    <span class="comment">// Whole numbers</span>
+        <span class="keyword">long</span> bigNumber = <span class="number">1000000L</span>;        <span class="comment">// Very large numbers</span>
+        
+        <span class="comment">// Decimal numbers</span>
+        <span class="keyword">double</span> price = <span class="number">19.99</span>;             <span class="comment">// Decimal numbers</span>
+        <span class="keyword">float</span> temperature = <span class="number">36.5f</span>;       <span class="comment">// Smaller decimal numbers</span>
+        
+        <span class="comment">// Text</span>
+        <span class="keyword">char</span> grade = <span class="string">'A'</span>;                <span class="comment">// Single character</span>
+        String name = <span class="string">"John"</span>;              <span class="comment">// Text (multiple characters)</span>
+        
+        <span class="comment">// True/False</span>
+        <span class="keyword">boolean</span> isStudent = <span class="keyword">true</span>;        <span class="comment">// Can be true or false</span>
+        
+        <span class="comment">// Print them out</span>
+        System.out.println(<span class="string">"Name: "</span> + name);
+        System.out.println(<span class="string">"Age: "</span> + age);
+        System.out.println(<span class="string">"Is student: "</span> + isStudent);
+    }
+}
+                    </div>
+                    
+                    <h4>2. Arrays - Your First Data Structure!</h4>
+                    <p>An array is like a row of numbered boxes. Each box can hold one item, and you can access any box by its number (index):</p>
+                    
+                    <div class="code-block">
+<span class="comment">// Working with arrays in Java</span>
+<span class="keyword">public class</span> <span class="class-name">ArrayBasics</span> {
+    <span class="keyword">public static void</span> main(String[] args) {
+        
+        <span class="comment">// Creating arrays - 3 different ways</span>
+        
+        <span class="comment">// Way 1: Declare size first, add values later</span>
+        <span class="keyword">int</span>[] scores = <span class="keyword">new int</span>[<span class="number">5</span>];  <span class="comment">// Array of 5 integers</span>
+        scores[<span class="number">0</span>] = <span class="number">85</span>;  <span class="comment">// First element (index 0)</span>
+        scores[<span class="number">1</span>] = <span class="number">92</span>;  <span class="comment">// Second element (index 1)</span>
+        scores[<span class="number">2</span>] = <span class="number">78</span>;  <span class="comment">// Third element (index 2)</span>
+        
+        <span class="comment">// Way 2: Create and fill with values at the same time</span>
+        <span class="keyword">int</span>[] ages = {<span class="number">25</span>, <span class="number">30</span>, <span class="number">35</span>, <span class="number">40</span>};
+        
+        <span class="comment">// Way 3: Another syntax for the same thing</span>
+        String[] names = <span class="keyword">new</span> String[]{<span class="string">"Alice"</span>, <span class="string">"Bob"</span>, <span class="string">"Charlie"</span>};
+        
+        <span class="comment">// Accessing array elements</span>
+        System.out.println(<span class="string">"First score: "</span> + scores[<span class="number">0</span>]);
+        System.out.println(<span class="string">"Second age: "</span> + ages[<span class="number">1</span>]);
+        System.out.println(<span class="string">"Third name: "</span> + names[<span class="number">2</span>]);
+        
+        <span class="comment">// Array length</span>
+        System.out.println(<span class="string">"Number of names: "</span> + names.length);
+        
+        <span class="comment">// Loop through an array</span>
+        System.out.println(<span class="string">"All names:"</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < names.length; i++) {
+            System.out.println(<span class="string">"Name "</span> + i + <span class="string">": "</span> + names[i]);
+        }
+        
+        <span class="comment">// Enhanced for loop (easier way)</span>
+        System.out.println(<span class="string">"All ages:"</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> age : ages) {
+            System.out.println(<span class="string">"Age: "</span> + age);
+        }
+    }
+}
+                    </div>
+                    
+                    <h4>3. Methods (Functions) - Organizing Your Code</h4>
+                    <p>Methods are like mini-programs that do specific tasks. Instead of writing the same code over and over, you create a method and call it whenever needed:</p>
+                    
+                    <div class="code-block">
+<span class="comment">// Understanding methods in Java</span>
+<span class="keyword">public class</span> <span class="class-name">MethodBasics</span> {
+    
+    <span class="comment">// Method that doesn't return anything (void)</span>
+    <span class="keyword">public static void</span> sayHello(String name) {
+        System.out.println(<span class="string">"Hello, "</span> + name + <span class="string">"!"</span>);
+    }
+    
+    <span class="comment">// Method that returns a value</span>
+    <span class="keyword">public static int</span> addTwoNumbers(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+        <span class="keyword">int</span> sum = a + b;
+        <span class="keyword">return</span> sum;  <span class="comment">// Send the result back</span>
+    }
+    
+    <span class="comment">// Method that finds the largest number in an array</span>
+    <span class="keyword">public static int</span> findLargest(<span class="keyword">int</span>[] numbers) {
+        <span class="keyword">int</span> largest = numbers[<span class="number">0</span>];  <span class="comment">// Start with first number</span>
+        
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i < numbers.length; i++) {
+            <span class="keyword">if</span> (numbers[i] > largest) {
+                largest = numbers[i];  <span class="comment">// Found a bigger number!</span>
+            }
+        }
+        
+        <span class="keyword">return</span> largest;
+    }
+    
+    <span class="comment">// Main method - where our program starts</span>
+    <span class="keyword">public static void</span> main(String[] args) {
+        
+        <span class="comment">// Calling methods</span>
+        sayHello(<span class="string">"Alice"</span>);
+        sayHello(<span class="string">"Bob"</span>);
+        
+        <span class="keyword">int</span> result = addTwoNumbers(<span class="number">5</span>, <span class="number">3</span>);
+        System.out.println(<span class="string">"5 + 3 = "</span> + result);
+        
+        <span class="keyword">int</span>[] myNumbers = {<span class="number">10</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">20</span>, <span class="number">3</span>};
+        <span class="keyword">int</span> biggest = findLargest(myNumbers);
+        System.out.println(<span class="string">"Largest number: "</span> + biggest);
+    }
+}
+                    </div>
+                    
+                    <h4>4. Classes and Objects - The Building Blocks</h4>
+                    <p>Think of a class as a blueprint (like a house plan) and an object as the actual thing built from that blueprint (the actual house):</p>
+                    
+                    <div class="code-block">
+<span class="comment">// Creating a simple class</span>
+<span class="keyword">class</span> <span class="class-name">Student</span> {
+    <span class="comment">// Properties (what a student has)</span>
+    String name;
+    <span class="keyword">int</span> age;
+    <span class="keyword">double</span> gpa;
+    
+    <span class="comment">// Constructor - how to create a new student</span>
+    <span class="keyword">public</span> Student(String studentName, <span class="keyword">int</span> studentAge, <span class="keyword">double</span> studentGpa) {
+        name = studentName;
+        age = studentAge;
+        gpa = studentGpa;
+    }
+    
+    <span class="comment">// Methods (what a student can do)</span>
+    <span class="keyword">public void</span> introduce() {
+        System.out.println(<span class="string">"Hi! I'm "</span> + name + <span class="string">", I'm "</span> + age + <span class="string">" years old."</span>);
+    }
+    
+    <span class="keyword">public boolean</span> isHonorStudent() {
+        <span class="keyword">return</span> gpa >= <span class="number">3.5</span>;  <span class="comment">// Return true if GPA is 3.5 or higher</span>
+    }
+}
+
+<span class="comment">// Using our Student class</span>
+<span class="keyword">public class</span> <span class="class-name">ClassExample</span> {
+    <span class="keyword">public static void</span> main(String[] args) {
+        
+        <span class="comment">// Create student objects</span>
+        Student alice = <span class="keyword">new</span> Student(<span class="string">"Alice"</span>, <span class="number">20</span>, <span class="number">3.8</span>);
+        Student bob = <span class="keyword">new</span> Student(<span class="string">"Bob"</span>, <span class="number">19</span>, <span class="number">3.2</span>);
+        
+        <span class="comment">// Use the objects</span>
+        alice.introduce();
+        bob.introduce();
+        
+        <span class="keyword">if</span> (alice.isHonorStudent()) {
+            System.out.println(alice.name + <span class="string">" is an honor student!"</span>);
+        }
+        
+        <span class="keyword">if</span> (bob.isHonorStudent()) {
+            System.out.println(bob.name + <span class="string">" is an honor student!"</span>);
+        } <span class="keyword">else</span> {
+            System.out.println(bob.name + <span class="string">" needs to study harder."</span>);
+        }
+    }
+}
+                    </div>
+                    
+                    <div class="note">
+                        <h4>💡 Why Learn These Java Basics?</h4>
+                        <p>These concepts are the foundation for everything we'll do in DSA:</p>
+                        <ul>
+                            <li><strong>Variables:</strong> Store data in our data structures</li>
+                            <li><strong>Arrays:</strong> The simplest data structure</li>
+                            <li><strong>Methods:</strong> Implement algorithms</li>
+                            <li><strong>Classes:</strong> Create custom data structures like LinkedList, Stack, etc.</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>🔄 Control Structures - Making Decisions</h3>
+                    
+                    <div class="code-block">
+<span class="comment">// Control structures help your program make decisions</span>
+<span class="keyword">public class</span> <span class="class-name">ControlStructures</span> {
+    <span class="keyword">public static void</span> main(String[] args) {
+        
+        <span class="comment">// IF-ELSE: Making decisions</span>
+        <span class="keyword">int</span> score = <span class="number">85</span>;
+        
+        <span class="keyword">if</span> (score >= <span class="number">90</span>) {
+            System.out.println(<span class="string">"Grade: A"</span>);
+        } <span class="keyword">else if</span> (score >= <span class="number">80</span>) {
+            System.out.println(<span class="string">"Grade: B"</span>);
+        } <span class="keyword">else if</span> (score >= <span class="number">70</span>) {
+            System.out.println(<span class="string">"Grade: C"</span>);
+        } <span class="keyword">else</span> {
+            System.out.println(<span class="string">"Grade: F"</span>);
+        }
+        
+        <span class="comment">// FOR LOOP: Repeat something a specific number of times</span>
+        System.out.println(<span class="string">"Counting from 1 to 5:"</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= <span class="number">5</span>; i++) {
+            System.out.println(<span class="string">"Count: "</span> + i);
+        }
+        
+        <span class="comment">// WHILE LOOP: Repeat while a condition is true</span>
+        <span class="keyword">int</span> countdown = <span class="number">5</span>;
+        System.out.println(<span class="string">"Countdown:"</span>);
+        <span class="keyword">while</span> (countdown > <span class="number">0</span>) {
+            System.out.println(countdown);
+            countdown--;  <span class="comment">// Same as countdown = countdown - 1</span>
+        }
+        System.out.println(<span class="string">"Blast off!"</span>);
+    }
+}
+                    </div>
+                    
+                    <button class="run-button" onclick="runBasicsExample()">
+                        🚀 Run Java Basics Examples
+                    </button>
+                    <div class="output-box" id="basicsOutput"></div>
+                </div>
+
+                <!-- Arrays Chapter -->
+                <div class="chapter" id="arrays">
+                    <h2>📊 Arrays & ArrayList - Your First Data Structure</h2>
+                    
+                    <p>Arrays are the most fundamental data structure. Think of them as a row of numbered boxes where you can store items. Each box has a number (index) starting from 0.</p>
+                    
+                    <div class="learning-path">
+                        <h4>🎯 What You'll Master</h4>
+                        <ul class="learning-steps">
+                            <li>📦 How arrays work and why they're important</li>
+                            <li>🔍 Searching for elements in arrays</li>
+                            <li>📈 ArrayList - arrays that can grow and shrink</li>
+                            <li>⚡ Time and space complexity of array operations</li>
+                            <li>🧩 Solving real interview problems</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>🔍 How Arrays Work</h3>
+                    <p>Imagine you have a parking lot with numbered spaces. Each space can hold exactly one car, and you can quickly find any car if you know its space number.</p>
+                    
+                    <div class="complexity-section">
+                        <h4>⚡ Array Performance</h4>
+                        <div class="complexity-grid">
+                            <div class="complexity-item time">
+                                <div class="complexity-label">Access by Index</div>
+                                <div class="complexity-value">O(1) - Instant!</div>
+                            </div>
+                            <div class="complexity-item time">
+                                <div class="complexity-label">Search for Value</div>
+                                <div class="complexity-value">O(n) - Check each element</div>
+                            </div>
+                            <div class="complexity-item space">
+                                <div class="complexity-label">Space Used</div>
+                                <div class="complexity-value">O(n) - One slot per element</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>📝 Array Operations in Detail</h3>
+                    
+                    <div class="code-block">
+<span class="comment">// Complete guide to working with arrays in Java</span>
+<span class="keyword">public class</span> <span class="class-name">ArrayMasterClass</span> {
+    
+    <span class="comment">// Method to demonstrate array creation and basic operations</span>
+    <span class="keyword">public static void</span> arrayBasics() {
+        System.out.println(<span class="string">"=== ARRAY BASICS ==="</span>);
+        
+        <span class="comment">// Creating arrays - multiple ways</span>
+        <span class="keyword">int</span>[] numbers1 = <span class="keyword">new int</span>[<span class="number">5</span>];           <span class="comment">// Empty array of size 5</span>
+        <span class="keyword">int</span>[] numbers2 = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>}; <span class="comment">// Array with values</span>
+        String[] fruits = {<span class="string">"apple"</span>, <span class="string">"banana"</span>, <span class="string">"orange"</span>};
+        
+        <span class="comment">// Accessing elements (remember: index starts at 0!)</span>
+        System.out.println(<span class="string">"First number: "</span> + numbers2[<span class="number">0</span>]);    <span class="comment">// Prints 10</span>
+        System.out.println(<span class="string">"Last number: "</span> + numbers2[<span class="number">4</span>]);     <span class="comment">// Prints 50</span>
+        System.out.println(<span class="string">"Second fruit: "</span> + fruits[<span class="number">1</span>]);      <span class="comment">// Prints "banana"</span>
+        
+        <span class="comment">// Modifying elements</span>
+        numbers2[<span class="number">0</span>] = <span class="number">100</span>;  <span class="comment">// Change first element to 100</span>
+        System.out.println(<span class="string">"Modified first number: "</span> + numbers2[<span class="number">0</span>]);
+        
+        <span class="comment">// Array length</span>
+        System.out.println(<span class="string">"Array length: "</span> + numbers2.length);
+        
+        <span class="comment">// Printing all elements</span>
+        System.out.println(<span class="string">"All numbers:"</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < numbers2.length; i++) {
+            System.out.println(<span class="string">"Index "</span> + i + <span class="string">": "</span> + numbers2[i]);
+        }
+    }
+    
+    <span class="comment">// Linear Search - O(n) time complexity</span>
+    <span class="keyword">public static int</span> linearSearch(<span class="keyword">int</span>[] array, <span class="keyword">int</span> target) {
+        System.out.println(<span class="string">"Searching for "</span> + target + <span class="string">" in the array..."</span>);
+        
+        <span class="comment">// Check each element one by one</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < array.length; i++) {
+            System.out.println(<span class="string">"Checking index "</span> + i + <span class="string">": "</span> + array[i]);
+            
+            <span class="keyword">if</span> (array[i] == target) {
+                System.out.println(<span class="string">"Found "</span> + target + <span class="string">" at index "</span> + i);
+                <span class="keyword">return</span> i;  <span class="comment">// Return the index where we found it</span>
+            }
+        }
+        
+        System.out.println(target + <span class="string">" not found in the array"</span>);
+        <span class="keyword">return</span> -<span class="number">1</span>;  <span class="comment">// Return -1 to indicate "not found"</span>
+    }
+    
+    <span class="comment">// Binary Search - O(log n) time complexity (array must be sorted!)</span>
+    <span class="keyword">public static int</span> binarySearch(<span class="keyword">int</span>[] sortedArray, <span class="keyword">int</span> target) {
+        System.out.println(<span class="string">"Binary search for "</span> + target);
+        
+        <span class="keyword">int</span> left = <span class="number">0</span>;                    <span class="comment">// Start of search range</span>
+        <span class="keyword">int</span> right = sortedArray.length - <span class="number">1</span>; <span class="comment">// End of search range</span>
+        <span class="keyword">int</span> steps = <span class="number">0</span>;
+        
+        <span class="keyword">while</span> (left <= right) {
+            steps++;
+            <span class="keyword">int</span> middle = left + (right - left) / <span class="number">2</span>;  <span class="comment">// Find middle point</span>
+            
+            System.out.println(<span class="string">"Step "</span> + steps + <span class="string">": Checking middle index "</span> + middle + 
+                             <span class="string">" (value: "</span> + sortedArray[middle] + <span class="string">")"</span>);
+            
+            <span class="keyword">if</span> (sortedArray[middle] == target) {
+                System.out.println(<span class="string">"Found "</span> + target + <span class="string">" at index "</span> + middle + 
+                                 <span class="string">" in "</span> + steps + <span class="string">" steps!"</span>);
+                <span class="keyword">return</span> middle;
+            }
+            
+            <span class="keyword">if</span> (sortedArray[middle] < target) {
+                left = middle + <span class="number">1</span>;  <span class="comment">// Target is in right half</span>
+                System.out.println(<span class="string">"Target is larger, searching right half"</span>);
+            } <span class="keyword">else</span> {
+                right = middle - <span class="number">1</span>; <span class="comment">// Target is in left half</span>
+                System.out.println(<span class="string">"Target is smaller, searching left half"</span>);
+            }
+        }
+        
+        System.out.println(target + <span class="string">" not found after "</span> + steps + <span class="string">" steps"</span>);
+        <span class="keyword">return</span> -<span class="number">1</span>;
+    }
+    
+    <span class="comment">// Find the maximum element in an array</span>
+    <span class="keyword">public static int</span> findMaximum(<span class="keyword">int</span>[] array) {
+        <span class="keyword">if</span> (array.length == <span class="number">0</span>) {
+            <span class="keyword">throw new</span> IllegalArgumentException(<span class="string">"Array cannot be empty"</span>);
+        }
+        
+        <span class="keyword">int</span> max = array[<span class="number">0</span>];  <span class="comment">// Assume first element is the maximum</span>
+        
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i < array.length; i++) {
+            <span class="keyword">if</span> (array[i] > max) {
+                max = array[i];  <span class="comment">// Found a new maximum!</span>
+            }
+        }
+        
+        <span class="keyword">return</span> max;
+    }
+    
+    <span class="comment">// Two Pointer Technique - very useful for array problems!</span>
+    <span class="keyword">public static boolean</span> hasPairWithSum(<span class="keyword">int</span>[] sortedArray, <span class="keyword">int</span> targetSum) {
+        System.out.println(<span class="string">"Looking for two numbers that add up to "</span> + targetSum);
+        
+        <span class="keyword">int</span> left = <span class="number">0</span>;                        <span class="comment">// Start from beginning</span>
+        <span class="keyword">int</span> right = sortedArray.length - <span class="number">1</span>;   <span class="comment">// Start from end</span>
+        
+        <span class="keyword">while</span> (left < right) {
+            <span class="keyword">int</span> currentSum = sortedArray[left] + sortedArray[right];
+            
+            System.out.println(<span class="string">"Trying: "</span> + sortedArray[left] + <span class="string">" + "</span> + 
+                             sortedArray[right] + <span class="string">" = "</span> + currentSum);
+            
+            <span class="keyword">if</span> (currentSum == targetSum) {
+                System.out.println(<span class="string">"Found pair: "</span> + sortedArray[left] + 
+                                 <span class="string">" and "</span> + sortedArray[right]);
+                <span class="keyword">return true</span>;
+            } <span class="keyword">else if</span> (currentSum < targetSum) {
+                left++;   <span class="comment">// Need a larger sum, move left pointer right</span>
+            } <span class="keyword">else</span> {
+                right--;  <span class="comment">// Need a smaller sum, move right pointer left</span>
+            }
+        }
+        
+        System.out.println(<span class="string">"No pair found that adds up to "</span> + targetSum);
+        <span class="keyword">return false</span>;
+    }
+    
+    <span class="comment">// Main method to test everything</span>
+    <span class="keyword">public static void</span> main(String[] args) {
+        <span class="comment">// Test basic array operations</span>
+        arrayBasics();
+        
+        System.out.println(<span class="string">"\n=== SEARCHING EXAMPLES ==="</span>);
+        
+        <span class="comment">// Test linear search</span>
+        <span class="keyword">int</span>[] numbers = {<span class="number">64</span>, <span class="number">34</span>, <span class="number">25</span>, <span class="number">12</span>, <span class="number">22</span>, <span class="number">11</span>, <span class="number">90</span>};
+        linearSearch(numbers, <span class="number">22</span>);
+        
+        System.out.println();
+        
+        <span class="comment">// Test binary search (needs sorted array)</span>
+        <span class="keyword">int</span>[] sortedNumbers = {<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">15</span>};
+        binarySearch(sortedNumbers, <span class="number">7</span>);
+        
+        System.out.println(<span class="string">"\n=== OTHER OPERATIONS ==="</span>);
+        
+        <span class="comment">// Find maximum</span>
+        <span class="keyword">int</span> max = findMaximum(numbers);
+        System.out.println(<span class="string">"Maximum element: "</span> + max);
+        
+        <span class="comment">// Two pointer technique</span>
+        hasPairWithSum(sortedNumbers, <span class="number">12</span>);
+    }
+}
+                    </div>
+                    
+                    <h3>📈 ArrayList - Dynamic Arrays</h3>
+                    <p>Regular arrays have a fixed size, but ArrayList can grow and shrink as needed. It's like a magical box that gets bigger when you add more items!</p>
+                    
+                    <div class="code-block">
+<span class="keyword">import</span> java.util.*;
+
+<span class="comment">// ArrayList - Arrays that can change size!</span>
+<span class="keyword">public class</span> <span class="class-name">ArrayListMasterClass</span> {
+    
+    <span class="keyword">public static void</span> arrayListBasics() {
+        System.out.println(<span class="string">"=== ARRAYLIST BASICS ==="</span>);
+        
+        <span class="comment">// Creating an ArrayList</span>
+        ArrayList<Integer> numbers = <span class="keyword">new</span> ArrayList<>();
+        ArrayList<String> names = <span class="keyword">new</span> ArrayList<>();
+        
+        <span class="comment">// Adding elements - O(1) amortized time</span>
+        numbers.add(<span class="number">10</span>);
+        numbers.add(<span class="number">20</span>);
+        numbers.add(<span class="number">30</span>);
+        System.out.println(<span class="string">"After adding 10, 20, 30: "</span> + numbers);
+        
+        <span class="comment">// Adding at specific position - O(n) time</span>
+        numbers.add(<span class="number">1</span>, <span class="number">15</span>);  <span class="comment">// Insert 15 at index 1</span>
+        System.out.println(<span class="string">"After inserting 15 at index 1: "</span> + numbers);
+        
+        <span class="comment">// Accessing elements - O(1) time</span>
+        System.out.println(<span class="string">"Element at index 0: "</span> + numbers.get(<span class="number">0</span>));
+        System.out.println(<span class="string">"Element at index 2: "</span> + numbers.get(<span class="number">2</span>));
+        
+        <span class="comment">// Updating elements - O(1) time</span>
+        numbers.set(<span class="number">0</span>, <span class="number">100</span>);  <span class="comment">// Change first element to 100</span>
+        System.out.println(<span class="string">"After changing first element to 100: "</span> + numbers);
+        
+        <span class="comment">// Size of ArrayList</span>
+        System.out.println(<span class="string">"Size of ArrayList: "</span> + numbers.size());
+        
+        <span class="comment">// Checking if element exists - O(n) time</span>
+        <span class="keyword">boolean</span> contains20 = numbers.contains(<span class="number">20</span>);
+        System.out.println(<span class="string">"Contains 20? "</span> + contains20);
+        
+        <span class="comment">// Finding index of element - O(n) time</span>
+        <span class="keyword">int</span> indexOf30 = numbers.indexOf(<span class="number">30</span>);
+        System.out.println(<span class="string">"Index of 30: "</span> + indexOf30);
+        
+        <span class="comment">// Removing elements</span>
+        numbers.remove(<span class="number">1</span>);  <span class="comment">// Remove element at index 1 - O(n) time</span>
+        System.out.println(<span class="string">"After removing element at index 1: "</span> + numbers);
+        
+        numbers.remove(Integer.valueOf(<span class="number">30</span>));  <span class="comment">// Remove by value - O(n) time</span>
+        System.out.println(<span class="string">"After removing value 30: "</span> + numbers);
+        
+        <span class="comment">// Iterating through ArrayList</span>
+        System.out.println(<span class="string">"All elements:"</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < numbers.size(); i++) {
+            System.out.println(<span class="string">"Index "</span> + i + <span class="string">": "</span> + numbers.get(i));
+        }
+        
+        <span class="comment">// Enhanced for loop (cleaner)</span>
+        System.out.println(<span class="string">"Using enhanced for loop:"</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> num : numbers) {
+            System.out.println(<span class="string">"Number: "</span> + num);
+        }
+    }
+    
+    <span class="comment">// Practical example: Managing a shopping list</span>
+    <span class="keyword">public static void</span> shoppingListExample() {
+        System.out.println(<span class="string">"\n=== SHOPPING LIST EXAMPLE ==="</span>);
+        
+        ArrayList<String> shoppingList = <span class="keyword">new</span> ArrayList<>();
+        
+        <span class="comment">// Add items to shopping list</span>
+        shoppingList.add(<span class="string">"Milk"</span>);
+        shoppingList.add(<span class="string">"Bread"</span>);
+        shoppingList.add(<span class="string">"Eggs"</span>);
+        shoppingList.add(<span class="string">"Apples"</span>);
+        
+        System.out.println(<span class="string">"Shopping List: "</span> + shoppingList);
+        
+        <span class="comment">// Oops, forgot butter! Add it at the beginning</span>
+        shoppingList.add(<span class="number">0</span>, <span class="string">"Butter"</span>);
+        System.out.println(<span class="string">"Added Butter at the beginning: "</span> + shoppingList);
+        
+        <span class="comment">// Check if we need to buy milk</span>
+        <span class="keyword">if</span> (shoppingList.contains(<span class="string">"Milk"</span>)) {
+            System.out.println(<span class="string">"Don't forget to buy milk!"</span>);
+        }
+        
+        <span class="comment">// Remove items as we shop</span>
+        shoppingList.remove(<span class="string">"Bread"</span>);
+        System.out.println(<span class="string">"Got bread! Remaining items: "</span> + shoppingList);
+        
+        <span class="comment">// How many items left?</span>
+        System.out.println(<span class="string">"Items left to buy: "</span> + shoppingList.size());
+    }
+    
+    <span class="keyword">public static void</span> main(String[] args) {
+        arrayListBasics();
+        shoppingListExample();
+    }
+}
+                    </div>
+                    
+                    <div class="note">
+                        <h4>🤔 Array vs ArrayList - When to Use Which?</h4>
+                        <ul>
+                            <li><strong>Use Array when:</strong> You know the exact size and it won't change</li>
+                            <li><strong>Use ArrayList when:</strong> Size might change, you need to add/remove elements</li>
+                            <li><strong>Performance:</strong> Arrays are slightly faster, but ArrayList is more flexible</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <h3>🔥 Practice Problems</h3>
+                        
+                        <div class="problem-card">
+                            <div class="problem-header">
+                                <div class="problem-title">1. Two Sum (LeetCode #1)</div>
+                                <div class="difficulty easy">Easy</div>
+                            </div>
+                            <div class="problem-description">
+                                <strong>Problem:</strong> Given an array of integers and a target sum, return the indices of two numbers that add up to the target.
+                                <br><br>
+                                <strong>Example:</strong> Input: [2, 7, 11, 15], target = 9 → Output: [0, 1] (because 2 + 7 = 9)
+                            </div>
+                            
+                            <div class="code-block">
+<span class="comment">// Solution 1: Brute Force - O(n²) time, O(1) space</span>
+<span class="keyword">public static int</span>[] twoSumBruteForce(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) {
+    System.out.println(<span class="string">"Using brute force approach..."</span>);
+    
+    <span class="comment">// Check every pair of numbers</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < nums.length; i++) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j < nums.length; j++) {
+            System.out.println(<span class="string">"Checking: "</span> + nums[i] + <span class="string">" + "</span> + nums[j] + 
+                             <span class="string">" = "</span> + (nums[i] + nums[j]));
+            
+            <span class="keyword">if</span> (nums[i] + nums[j] == target) {
+                System.out.println(<span class="string">"Found solution!"</span>);
+                <span class="keyword">return new int</span>[] {i, j};
+            }
+        }
+    }
+    
+    <span class="keyword">return new int</span>[] {}; <span class="comment">// No solution found</span>
+}
+
+<span class="comment">// Solution 2: Hash Map - O(n) time, O(n) space</span>
+<span class="keyword">public static int</span>[] twoSumOptimal(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) {
+    System.out.println(<span class="string">"Using hash map approach..."</span>);
+    
+    HashMap<Integer, Integer> map = <span class="keyword">new</span> HashMap<>();
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < nums.length; i++) {
+        <span class="keyword">int</span> complement = target - nums[i];
+        System.out.println(<span class="string">"Looking for complement of "</span> + nums[i] + <span class="string">": "</span> + complement);
+        
+        <span class="keyword">if</span> (map.containsKey(complement)) {
+            System.out.println(<span class="string">"Found complement at index "</span> + map.get(complement));
+            <span class="keyword">return new int</span>[] {map.get(complement), i};
+        }
+        
+        map.put(nums[i], i);
+        System.out.println(<span class="string">"Added "</span> + nums[i] + <span class="string">" at index "</span> + i + <span class="string">" to map"</span>);
+    }
+    
+    <span class="keyword">return new int</span>[] {}; <span class="comment">// No solution found</span>
+}
+                            </div>
+                        </div>
+                        
+                        <div class="problem-card">
+                            <div class="problem-header">
+                                <div class="problem-title">2. Best Time to Buy and Sell Stock (LeetCode #121)</div>
+                                <div class="difficulty easy">Easy</div>
+                            </div>
+                            <div class="problem-description">
+                                <strong>Problem:</strong> Find the maximum profit from buying and selling stock once.
+                                <br><br>
+                                <strong>Example:</strong> Input: [7, 1, 5, 3, 6, 4] → Output: 5 (buy at 1, sell at 6)
+                            </div>
+                            
+                            <div class="code-block">
+<span class="keyword">public static int</span> maxProfit(<span class="keyword">int</span>[] prices) {
+    <span class="keyword">if</span> (prices.length < <span class="number">2</span>) {
+        <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// Can't make profit with less than 2 prices</span>
+    }
+    
+    <span class="keyword">int</span> minPrice = prices[<span class="number">0</span>];  <span class="comment">// Lowest price seen so far</span>
+    <span class="keyword">int</span> maxProfit = <span class="number">0</span>;        <span class="comment">// Maximum profit found so far</span>
+    
+    System.out.println(<span class="string">"Day 0: Price = "</span> + prices[<span class="number">0</span>] + <span class="string">", Min Price = "</span> + minPrice + 
+                     <span class="string">", Max Profit = "</span> + maxProfit);
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i < prices.length; i++) {
+        <span class="keyword">int</span> currentPrice = prices[i];
+        
+        <span class="comment">// Calculate profit if we sell today</span>
+        <span class="keyword">int</span> todayProfit = currentPrice - minPrice;
+        
+        <span class="comment">// Update maximum profit if today's profit is better</span>
+        <span class="keyword">if</span> (todayProfit > maxProfit) {
+            maxProfit = todayProfit;
+        }
+        
+        <span class="comment">// Update minimum price if today's price is lower</span>
+        <span class="keyword">if</span> (currentPrice < minPrice) {
+            minPrice = currentPrice;
+        }
+        
+        System.out.println(<span class="string">"Day "</span> + i + <span class="string">": Price = "</span> + currentPrice + 
+                         <span class="string">", Min Price = "</span> + minPrice + 
+                         <span class="string">", Today's Profit = "</span> + todayProfit +
+                         <span class="string">", Max Profit = "</span> + maxProfit);
+    }
+    
+    <span class="keyword">return</span> maxProfit;
+}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="run-button" onclick="runArrayExample()">
+                        🚀 Run Array Examples & Problems
+                    </button>
+                    <div class="output-box" id="arrayOutput"></div>
+                </div>
+
+                <!-- Continue with other chapters... Due to length constraints, I'll provide the remaining chapters in a more condensed but still comprehensive format -->
+                
+                <!-- Strings Chapter -->
+                <div class="chapter" id="strings">
+                    <h2>🔤 Strings & StringBuilder</h2>
+                    
+                    <p>Strings are sequences of characters. In Java, strings are immutable (cannot be changed), which means every time you modify a string, a new string object is created.</p>
+                    
+                    <div class="learning-path">
+                        <h4>🎯 String Mastery Path</h4>
+                        <ul class="learning-steps">
+                            <li>🔤 Understanding how strings work in memory</li>
+                            <li>⚡ String vs StringBuilder performance</li>
+                            <li>🔍 String searching and manipulation</li>
+                            <li>🧩 Common string algorithms and patterns</li>
+                            <li>💡 Solving palindrome and anagram problems</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>⚠️ Important String Concept</h4>
+                        <p>In Java, strings are immutable! When you do <code>str = str + "hello"</code>, you're not modifying the original string - you're creating a completely new string. This can be slow if done many times.</p>
+                    </div>
+                    
+                    <div class="code-block">
+<span class="comment">// Complete guide to strings in Java</span>
+<span class="keyword">public class</span> <span class="class-name">StringMasterClass</span> {
+    
+    <span class="keyword">public static void</span> stringBasics() {
+        System.out.println(<span class="string">"=== STRING BASICS ==="</span>);
+        
+        <span class="comment">// Creating strings</span>
+        String str1 = <span class="string">"Hello"</span>;           <span class="comment">// String literal</span>
+        String str2 = <span class="keyword">new</span> String(<span class="string">"Hello"</span>); <span class="comment">// String object</span>
+        String str3 = <span class="string">"World"</span>;
+        
+        <span class="comment">// String concatenation (creates new strings each time!)</span>
+        String greeting = str1 + <span class="string">" "</span> + str3;
+        System.out.println(<span class="string">"Greeting: "</span> + greeting);
+        
+        <span class="comment">// String length</span>
+        System.out.println(<span class="string">"Length of greeting: "</span> + greeting.length());
+        
+        <span class="comment">// Accessing characters</span>
+        <span class="keyword">char</span> firstChar = greeting.charAt(<span class="number">0</span>);
+        <span class="keyword">char</span> lastChar = greeting.charAt(greeting.length() - <span class="number">1</span>);
+        System.out.println(<span class="string">"First character: "</span> + firstChar);
+        System.out.println(<span class="string">"Last character: "</span> + lastChar);
+        
+        <span class="comment">// String comparison</span>
+        System.out.println(<span class="string">"str1 equals str2: "</span> + str1.equals(str2));
+        System.out.println(<span class="string">"str1 == str2: "</span> + (str1 == str2)); <span class="comment">// Don't use == for strings!</span>
+        
+        <span class="comment">// Case operations</span>
+        System.out.println(<span class="string">"Uppercase: "</span> + greeting.toUpperCase());
+        System.out.println(<span class="string">"Lowercase: "</span> + greeting.toLowerCase());
+        
+        <span class="comment">// Substring</span>
+        String sub = greeting.substring(<span class="number">0</span>, <span class="number">5</span>); <span class="comment">// From index 0 to 4</span>
+        System.out.println(<span class="string">"Substring (0-5): "</span> + sub);
+    }
+    
+    <span class="comment">// StringBuilder - for efficient string building</span>
+    <span class="keyword">public static void</span> stringBuilderDemo() {
+        System.out.println(<span class="string">"\n=== STRINGBUILDER DEMO ==="</span>);
+        
+        <span class="comment">// Inefficient way (creates many string objects)</span>
+        String inefficient = <span class="string">""</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+            inefficient += <span class="string">"Number "</span> + i + <span class="string">" "</span>; <span class="comment">// Creates new string each time!</span>
+        }
+        System.out.println(<span class="string">"Inefficient result: "</span> + inefficient);
+        
+        <span class="comment">// Efficient way using StringBuilder</span>
+        StringBuilder sb = <span class="keyword">new</span> StringBuilder();
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+            sb.append(<span class="string">"Number "</span>).append(i).append(<span class="string">" "</span>); <span class="comment">// Modifies existing object</span>
+        }
+        String efficient = sb.toString();
+        System.out.println(<span class="string">"Efficient result: "</span> + efficient);
+        
+        <span class="comment">// StringBuilder operations</span>
+        StringBuilder demo = <span class="keyword">new</span> StringBuilder(<span class="string">"Hello"</span>);
+        demo.append(<span class="string">" World"</span>);           <span class="comment">// Add to end</span>
+        demo.insert(<span class="number">5</span>, <span class="string">" Beautiful"</span>);   <span class="comment">// Insert at position 5</span>
+        demo.reverse();                  <span class="comment">// Reverse the string</span>
+        System.out.println(<span class="string">"StringBuilder demo: "</span> + demo.toString());
+    }
+    
+    <span class="comment">// Check if a string is a palindrome</span>
+    <span class="keyword">public static boolean</span> isPalindrome(String s) {
+        System.out.println(<span class="string">"Checking if '"</span> + s + <span class="string">"' is a palindrome..."</span>);
+        
+        <span class="comment">// Convert to lowercase and remove non-alphanumeric characters</span>
+        String cleaned = s.toLowerCase().replaceAll(<span class="string">"[^a-z0-9]"</span>, <span class="string">""</span>);
+        System.out.println(<span class="string">"Cleaned string: '"</span> + cleaned + <span class="string">"'"</span>);
+        
+        <span class="keyword">int</span> left = <span class="number">0</span>;
+        <span class="keyword">int</span> right = cleaned.length() - <span class="number">1</span>;
+        
+        <span class="keyword">while</span> (left < right) {
+            System.out.println(<span class="string">"Comparing '"</span> + cleaned.charAt(left) + 
+                             <span class="string">"' with '"</span> + cleaned.charAt(right) + <span class="string">"'"</span>);
+            
+            <span class="keyword">if</span> (cleaned.charAt(left) != cleaned.charAt(right)) {
+                System.out.println(<span class="string">"Not a palindrome!"</span>);
+                <span class="keyword">return false</span>;
+            }
+            left++;
+            right--;
+        }
+        
+        System.out.println(<span class="string">"It's a palindrome!"</span>);
+        <span class="keyword">return true</span>;
+    }
+    
+    <span class="comment">// Check if two strings are anagrams</span>
+    <span class="keyword">public static boolean</span> areAnagrams(String s1, String s2) {
+        System.out.println(<span class="string">"Checking if '"</span> + s1 + <span class="string">"' and '"</span> + s2 + <span class="string">"' are anagrams..."</span>);
+        
+        <span class="keyword">if</span> (s1.length() != s2.length()) {
+            System.out.println(<span class="string">"Different lengths - not anagrams"</span>);
+            <span class="keyword">return false</span>;
+        }
+        
+        <span class="comment">// Count frequency of each character</span>
+        <span class="keyword">int</span>[] count = <span class="keyword">new int</span>[<span class="number">26</span>]; <span class="comment">// For lowercase letters a-z</span>
+        
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < s1.length(); i++) {
+            count[s1.charAt(i) - <span class="string">'a'</span>]++; <span class="comment">// Increment count for s1</span>
+            count[s2.charAt(i) - <span class="string">'a'</span>]--; <span class="comment">// Decrement count for s2</span>
+        }
+        
+        <span class="comment">// If all counts are zero, strings are anagrams</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> c : count) {
+            <span class="keyword">if</span> (c != <span class="number">0</span>) {
+                System.out.println(<span class="string">"Not anagrams!"</span>);
+                <span class="keyword">return false</span>;
+            }
+        }
+        
+        System.out.println(<span class="string">"They are anagrams!"</span>);
+        <span class="keyword">return true</span>;
+    }
+    
+    <span class="keyword">public static void</span> main(String[] args) {
+        stringBasics();
+        stringBuilderDemo();
+        
+        System.out.println(<span class="string">"\n=== PALINDROME TESTS ==="</span>);
+        isPalindrome(<span class="string">"racecar"</span>);
+        isPalindrome(<span class="string">"A man a plan a canal Panama"</span>);
+        isPalindrome(<span class="string">"hello"</span>);
+        
+        System.out.println(<span class="string">"\n=== ANAGRAM TESTS ==="</span>);
+        areAnagrams(<span class="string">"listen"</span>, <span class="string">"silent"</span>);
+        areAnagrams(<span class="string">"hello"</span>, <span class="string">"world"</span>);
+    }
+}
+                    </div>
+                    
+                    <div class="problem-section">
+                        <h3>🔥 String Practice Problems</h3>
+                        
+                        <div class="problem-card">
+                            <div class="problem-header">
+                                <div class="problem-title">125. Valid Palindrome</div>
+                                <div class="difficulty easy">Easy</div>
+                            </div>
+                            <div class="problem-description">
+                                Check if a string is a palindrome, considering only alphanumeric characters and ignoring cases.
+                            </div>
+                            
+                            <div class="code-block">
+<span class="keyword">public boolean</span> isPalindrome(String s) {
+    <span class="keyword">int</span> left = <span class="number">0</span>, right = s.length() - <span class="number">1</span>;
+    
+    <span class="keyword">while</span> (left < right) {
+        <span class="comment">// Skip non-alphanumeric characters from left</span>
+        <span class="keyword">while</span> (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
+            left++;
+        }
+        
+        <span class="comment">// Skip non-alphanumeric characters from right</span>
+        <span class="keyword">while</span> (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
+            right--;
+        }
+        
+        <span class="comment">// Compare characters (case insensitive)</span>
+        <span class="keyword">if</span> (Character.toLowerCase(s.charAt(left)) != 
+            Character.toLowerCase(s.charAt(right))) {
+            <span class="keyword">return false</span>;
+        }
+        
+        left++;
+        right--;
+    }
+    
+    <span class="keyword">return true</span>;
+}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="run-button" onclick="runStringExample()">
+                        🚀 Run String Examples
+                    </button>
+                    <div class="output-box" id="stringOutput"></div>
+                </div>
+
+                <!-- I'll continue with the remaining chapters in the same detailed format -->
+                <!-- For brevity in this response, I'll include the key remaining chapters -->
+
+                <!-- Linked Lists Chapter -->
+                <div class="chapter" id="linkedlist">
+                    <h2>🔗 Linked Lists - Dynamic Data Storage</h2>
+                    
+                    <p>A linked list is like a treasure hunt where each clue (node) tells you where to find the next clue. Unlike arrays where elements are stored next to each other, linked list elements can be anywhere in memory.</p>
+                    
+                    <div class="learning-path">
+                        <h4>🎯 Linked List Journey</h4>
+                        <ul class="learning-steps">
+                            <li>🧩 Understanding nodes and pointers</li>
+                            <li>➡️ Singly vs Doubly linked lists</li>
+                            <li>🔄 Common operations: insert, delete, search</li>
+                            <li>🏃‍♂️ Two-pointer techniques</li>
+                            <li>🔄 Reversing and merging linked lists</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="complexity-section">
+                        <h4>⚡ Linked List Performance</h4>
+                        <div class="complexity-grid">
+                            <div class="complexity-item time">
+                                <div class="complexity-label">Access/Search</div>
+                                <div class="complexity-value">O(n) - Must traverse from head</div>
+                            </div>
+                            <div class="complexity-item time">
+                                <div class="complexity-label">Insert/Delete</div>
+                                <div class="complexity-value">O(1) - If you have the node</div>
+                            </div>
+                            <div class="complexity-item space">
+                                <div class="complexity-label">Space</div>
+                                <div class="complexity-value">O(n) - Extra space for pointers</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+<span class="comment">// Node class - the building block of linked lists</span>
+<span class="keyword">class</span> <span class="class-name">ListNode</span> {
+    <span class="keyword">int</span> val;        <span class="comment">// The data stored in this node</span>
+    ListNode next;   <span class="comment">// Reference to the next node</span>
+    
+    <span class="comment">// Constructors</span>
+    ListNode() {}
+    
+    ListNode(<span class="keyword">int</span> val) { 
+        <span class="keyword">this</span>.val = val; 
+    }
+    
+    ListNode(<span class="keyword">int</span> val, ListNode next) { 
+        <span class="keyword">this</span>.val = val; 
+        <span class="keyword">this</span>.next = next; 
+    }
+}
+
+<span class="keyword">public class</span> <span class="class-name">LinkedListMasterClass</span> {
+    
+    <span class="comment">// Print all elements in the linked list</span>
+    <span class="keyword">public static void</span> printList(ListNode head) {
+        System.out.print(<span class="string">"List: "</span>);
+        ListNode current = head;
+        
+        <span class="keyword">while</span> (current != <span class="keyword">null</span>) {
+            System.out.print(current.val);
+            <span class="keyword">if</span> (current.next != <span class="keyword">null</span>) {
+                System.out.print(<span class="string">" -> "</span>);
+            }
+            current = current.next;
+        }
+        System.out.println(<span class="string">" -> null"</span>);
+    }
+    
+    <span class="comment">// Insert at the beginning - O(1)</span>
+    <span class="keyword">public static</span> ListNode insertAtBeginning(ListNode head, <span class="keyword">int</span> val) {
+        System.out.println(<span class="string">"Inserting "</span> + val + <span class="string">" at the beginning"</span>);
+        
+        ListNode newNode = <span class="keyword">new</span> ListNode(val);
+        newNode.next = head;  <span class="comment">// Point new node to current head</span>
+        
+        <span class="keyword">return</span> newNode;      <span class="comment">// New node becomes the head</span>
+    }
+    
+    <span class="comment">// Insert at the end - O(n)</span>
+    <span class="keyword">public static</span> ListNode insertAtEnd(ListNode head, <span class="keyword">int</span> val) {
+        System.out.println(<span class="string">"Inserting "</span> + val + <span class="string">" at the end"</span>);
+        
+        ListNode newNode = <span class="keyword">new</span> ListNode(val);
+        
+        <span class="comment">// If list is empty, new node becomes head</span>
+        <span class="keyword">if</span> (head == <span class="keyword">null</span>) {
+            <span class="keyword">return</span> newNode;
+        }
+        
+        <span class="comment">// Find the last node</span>
+        ListNode current = head;
+        <span class="keyword">while</span> (current.next != <span class="keyword">null</span>) {
+            current = current.next;
+        }
+        
+        <span class="comment">// Link the last node to new node</span>
+        current.next = newNode;
+        
+        <span class="keyword">return</span> head;
+    }
+    
+    <span class="comment">// Delete a node with given value - O(n)</span>
+    <span class="keyword">public static</span> ListNode deleteNode(ListNode head, <span class="keyword">int</span> val) {
+        System.out.println(<span class="string">"Deleting node with value "</span> + val);
+        
+        <span class="comment">// If list is empty</span>
+        <span class="keyword">if</span> (head == <span class="keyword">null</span>) {
+            System.out.println(<span class="string">"List is empty, nothing to delete"</span>);
+            <span class="keyword">return null</span>;
+        }
+        
+        <span class="comment">// If head needs to be deleted</span>
+        <span class="keyword">if</span> (head.val == val) {
+            System.out.println(<span class="string">"Deleting head node"</span>);
+            <span class="keyword">return</span> head.next;
+        }
+        
+        <span class="comment">// Find the node before the one to delete</span>
+        ListNode current = head;
+        <span class="keyword">while</span> (current.next != <span class="keyword">null</span> && current.next.val != val) {
+            current = current.next;
+        }
+        
+        <span class="comment">// If node found, skip it</span>
+        <span class="keyword">if</span> (current.next != <span class="keyword">null</span>) {
+            System.out.println(<span class="string">"Found and deleting node"</span>);
+            current.next = current.next.next;
+        } <span class="keyword">else</span> {
+            System.out.println(<span class="string">"Node not found"</span>);
+        }
+        
+        <span class="keyword">return</span> head;
+    }
+    
+    <span class="comment">// Reverse a linked list - O(n)</span>
+    <span class="keyword">public static</span> ListNode reverseList(ListNode head) {
+        System.out.println(<span class="string">"Reversing the linked list"</span>);
+        
+        ListNode prev = <span class="keyword">null</span>;
+        ListNode current = head;
+        
+        <span class="keyword">while</span> (current != <span class="keyword">null</span>) {
+            ListNode nextTemp = current.next;  <span class="comment">// Save next node</span>
+            current.next = prev;               <span class="comment">// Reverse the link</span>
+            prev = current;                    <span class="comment">// Move prev forward</span>
+            current = nextTemp;                <span class="comment">// Move current forward</span>
+        }
+        
+        <span class="keyword">return</span> prev;  <span class="comment">// prev is now the new head</span>
+    }
+    
+    <span class="comment">// Find middle of linked list using Floyd's algorithm</span>
+    <span class="keyword">public static</span> ListNode findMiddle(ListNode head) {
+        System.out.println(<span class="string">"Finding middle of the list"</span>);
+        
+        <span class="keyword">if</span> (head == <span class="keyword">null</span>) {
+            <span class="keyword">return null</span>;
+        }
+        
+        ListNode slow = head;  <span class="comment">// Moves 1 step at a time</span>
+        ListNode fast = head;  <span class="comment">// Moves 2 steps at a time</span>
+        
+        <span class="keyword">while</span> (fast != <span class="keyword">null</span> && fast.next != <span class="keyword">null</span>) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        System.out.println(<span class="string">"Middle element: "</span> + slow.val);
+        <span class="keyword">return</span> slow;
+    }
+    
+    <span class="keyword">public static void</span> main(String[] args) {
+        System.out.println(<span class="string">"=== LINKED LIST DEMO ==="</span>);
+        
+        <span class="comment">// Create a simple linked list: 1 -> 2 -> 3</span>
+        ListNode head = <span class="keyword">new</span> ListNode(<span class="number">1</span>);
+        head.next = <span class="keyword">new</span> ListNode(<span class="number">2</span>);
+        head.next.next = <span class="keyword">new</span> ListNode(<span class="number">3</span>);
+        
+        printList(head);
+        
+        <span class="comment">// Insert at beginning</span>
+        head = insertAtBeginning(head, <span class="number">0</span>);
+        printList(head);
+        
+        <span class="comment">// Insert at end</span>
+        head = insertAtEnd(head, <span class="number">4</span>);
+        printList(head);
+        
+        <span class="comment">// Find middle</span>
+        findMiddle(head);
+        
+        <span class="comment">// Delete a node</span>
+        head = deleteNode(head, <span class="number">2</span>);
+        printList(head);
+        
+        <span class="comment">// Reverse the list</span>
+        head = reverseList(head);
+        printList(head);
+    }
+}
+                    </div>
+                    
+                    <button class="run-button" onclick="runLinkedListExample()">
+                        🚀 Run Linked List Examples
+                    </button>
+                    <div class="output-box" id="linkedListOutput"></div>
+                </div>
+
+                <!-- Continue with remaining chapters... -->
+                <!-- I'll add the other chapters (Stacks, Trees, Graphs, Sorting, DP) with similar detail -->
+                
+                <!-- For brevity, I'll include condensed versions of the remaining chapters -->
+                
+                <div class="chapter" id="stacks">
+                    <h2>📚 Stacks & Queues</h2>
+                    <p>Stack: Last In, First Out (LIFO) - like a stack of plates. Queue: First In, First Out (FIFO) - like a line at a store.</p>
+                    
+                    <div class="code-block">
+<span class="comment">// Stack implementation using array</span>
+<span class="keyword">class</span> <span class="class-name">Stack</span> {
+    <span class="keyword">private int</span>[] arr;
+    <span class="keyword">private int</span> top;
+    <span class="keyword">private int</span> capacity;
+    
+    <span class="keyword">public</span> Stack(<span class="keyword">int</span> size) {
+        arr = <span class="keyword">new int</span>[size];
+        capacity = size;
+        top = -<span class="number">1</span>;
+    }
+    
+    <span class="keyword">public void</span> push(<span class="keyword">int</span> x) {
+        <span class="keyword">if</span> (isFull()) {
+            System.out.println(<span class="string">"Stack Overflow!"</span>);
+            <span class="keyword">return</span>;
+        }
+        arr[++top] = x;
+        System.out.println(<span class="string">"Pushed "</span> + x);
+    }
+    
+    <span class="keyword">public int</span> pop() {
+        <span class="keyword">if</span> (isEmpty()) {
+            System.out.println(<span class="string">"Stack Underflow!"</span>);
+            <span class="keyword">return</span> -<span class="number">1</span>;
+        }
+        <span class="keyword">int</span> x = arr[top--];
+        System.out.println(<span class="string">"Popped "</span> + x);
+        <span class="keyword">return</span> x;
+    }
+    
+    <span class="keyword">public boolean</span> isEmpty() { <span class="keyword">return</span> top == -<span class="number">1</span>; }
+    <span class="keyword">public boolean</span> isFull() { <span class="keyword">return</span> top == capacity - <span class="number">1</span>; }
+}
+                    </div>
+                    
+                    <button class="run-button" onclick="runStackExample()">🚀 Run Stack Examples</button>
+                    <div class="output-box" id="stackOutput"></div>
+                </div>
+
+                <div class="chapter" id="trees">
+                    <h2>🌳 Trees & Binary Trees</h2>
+                    <p>A tree is a hierarchical data structure with a root node and subtrees. Binary trees have at most 2 children per node.</p>
+                    
+                    <div class="code-block">
+<span class="keyword">class</span> <span class="class-name">TreeNode</span> {
+    <span class="keyword">int</span> val;
+    TreeNode left, right;
+    
+    TreeNode(<span class="keyword">int</span> val) { <span class="keyword">this</span>.val = val; }
+}
+
+<span class="keyword">public class</span> <span class="class-name">BinaryTree</span> {
+    <span class="comment">// Inorder traversal: Left -> Root -> Right</span>
+    <span class="keyword">public static void</span> inorder(TreeNode root) {
+        <span class="keyword">if</span> (root != <span class="keyword">null</span>) {
+            inorder(root.left);
+            System.out.print(root.val + <span class="string">" "</span>);
+            inorder(root.right);
+        }
+    }
+    
+    <span class="comment">// Calculate height of tree</span>
+    <span class="keyword">public static int</span> height(TreeNode root) {
+        <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;
+        <span class="keyword">return</span> <span class="number">1</span> + Math.max(height(root.left), height(root.right));
+    }
+}
+                    </div>
+                    
+                    <button class="run-button" onclick="runTreeExample()">🚀 Run Tree Examples</button>
+                    <div class="output-box" id="treeOutput"></div>
+                </div>
+
+                <div class="chapter" id="graphs">
+                    <h2>🕸️ Graphs & Algorithms</h2>
+                    <p>Graphs represent relationships between objects. Think of social networks, maps, or web pages linking to each other.</p>
+                    
+                    <div class="code-block">
+<span class="keyword">public class</span> <span class="class-name">Graph</span> {
+    <span class="keyword">private int</span> vertices;
+    <span class="keyword">private</span> List<List<Integer>> adjList;
+    
+    <span class="keyword">public</span> Graph(<span class="keyword">int</span> v) {
+        vertices = v;
+        adjList = <span class="keyword">new</span> ArrayList<>();
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < v; i++) {
+            adjList.add(<span class="keyword">new</span> ArrayList<>());
+        }
+    }
+    
+    <span class="keyword">public void</span> addEdge(<span class="keyword">int</span> src, <span class="keyword">int</span> dest) {
+        adjList.get(src).add(dest);
+        adjList.get(dest).add(src); <span class="comment">// For undirected graph</span>
+    }
+    
+    <span class="comment">// Depth-First Search</span>
+    <span class="keyword">public void</span> dfs(<span class="keyword">int</span> start) {
+        <span class="keyword">boolean</span>[] visited = <span class="keyword">new boolean</span>[vertices];
+        dfsHelper(start, visited);
+    }
+    
+    <span class="keyword">private void</span> dfsHelper(<span class="keyword">int</span> v, <span class="keyword">boolean</span>[] visited) {
+        visited[v] = <span class="keyword">true</span>;
+        System.out.print(v + <span class="string">" "</span>);
+        
+        <span class="keyword">for</span> (<span class="keyword">int</span> neighbor : adjList.get(v)) {
+            <span class="keyword">if</span> (!visited[neighbor]) {
+                dfsHelper(neighbor, visited);
+            }
+        }
+    }
+}
+                    </div>
+                    
+                    <button class="run-button" onclick="runGraphExample()">🚀 Run Graph Examples</button>
+                    <div class="output-box" id="graphOutput"></div>
+                </div>
+
+                <div class="chapter" id="sorting">
+                    <h2>🔄 Sorting Algorithms</h2>
+                    <p>Sorting arranges elements in order. Different algorithms have different trade-offs between speed and memory usage.</p>
+                    
+                    <div class="code-block">
+<span class="keyword">public class</span> <span class="class-name">SortingAlgorithms</span> {
+    
+    <span class="comment">// Bubble Sort - O(n²) but easy to understand</span>
+    <span class="keyword">public static void</span> bubbleSort(<span class="keyword">int</span>[] arr) {
+        <span class="keyword">int</span> n = arr.length;
+        System.out.println(<span class="string">"Starting Bubble Sort..."</span>);
+        
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < n - <span class="number">1</span>; i++) {
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j < n - i - <span class="number">1</span>; j++) {
+                <span class="keyword">if</span> (arr[j] > arr[j + <span class="number">1</span>]) {
+                    <span class="comment">// Swap elements</span>
+                    <span class="keyword">int</span> temp = arr[j];
+                    arr[j] = arr[j + <span class="number">1</span>];
+                    arr[j + <span class="number">1</span>] = temp;
+                    
+                    System.out.println(<span class="string">"Swapped "</span> + temp + <span class="string">" and "</span> + arr[j]);
+                }
+            }
+        }
+    }
+    
+    <span class="comment">// Quick Sort - O(n log n) average case</span>
+    <span class="keyword">public static void</span> quickSort(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> low, <span class="keyword">int</span> high) {
+        <span class="keyword">if</span> (low < high) {
+            <span class="keyword">int</span> pi = partition(arr, low, high);
+            quickSort(arr, low, pi - <span class="number">1</span>);
+            quickSort(arr, pi + <span class="number">1</span>, high);
+        }
+    }
+    
+    <span class="keyword">private static int</span> partition(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> low, <span class="keyword">int</span> high) {
+        <span class="keyword">int</span> pivot = arr[high];
+        <span class="keyword">int</span> i = low - <span class="number">1</span>;
+        
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = low; j < high; j++) {
+            <span class="keyword">if</span> (arr[j] < pivot) {
+                i++;
+                <span class="keyword">int</span> temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        
+        <span class="keyword">int</span> temp = arr[i + <span class="number">1</span>];
+        arr[i + <span class="number">1</span>] = arr[high];
+        arr[high] = temp;
+        
+        <span class="keyword">return</span> i + <span class="number">1</span>;
+    }
+}
+                    </div>
+                    
+                    <button class="run-button" onclick="runSortingExample()">🚀 Run Sorting Examples</button>
+                    <div class="output-box" id="sortingOutput"></div>
+                </div>
+
+                <div class="chapter" id="dp">
+                    <h2>🧠 Dynamic Programming</h2>
+                    <p>Dynamic Programming solves complex problems by breaking them into simpler subproblems and storing results to avoid recalculation.</p>
+                    
+                    <div class="code-block">
+<span class="keyword">public class</span> <span class="class-name">DynamicProgramming</span> {
+    
+    <span class="comment">// Fibonacci with memoization</span>
+    <span class="keyword">public static int</span> fibonacci(<span class="keyword">int</span> n) {
+        <span class="keyword">if</span> (n <= <span class="number">1</span>) <span class="keyword">return</span> n;
+        
+        <span class="keyword">int</span>[] dp = <span class="keyword">new int</span>[n + <span class="number">1</span>];
+        dp[<span class="number">0</span>] = <span class="number">0</span>;
+        dp[<span class="number">1</span>] = <span class="number">1</span>;
+        
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i <= n; i++) {
+            dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>];
+            System.out.println(<span class="string">"F("</span> + i + <span class="string">") = "</span> + dp[i]);
+        }
+        
+        <span class="keyword">return</span> dp[n];
+    }
+    
+    <span class="comment">// Climbing Stairs problem</span>
+    <span class="keyword">public static int</span> climbStairs(<span class="keyword">int</span> n) {
+        <span class="keyword">if</span> (n <= <span class="number">2</span>) <span class="keyword">return
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96f9214aa0e185a8',t:'MTc1NTI2NTUwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
